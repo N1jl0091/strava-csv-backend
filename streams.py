@@ -56,4 +56,9 @@ def get_activity_stream(session_id: str, activity_id: str):
                 stream_data.get("velocity_smooth", {}).get("data", [])[i] if i < len(stream_data.get("velocity_smooth", {}).get("data", [])) else "",
                 stream_data.get("distance", {}).get("data", [])[i] if i < len(stream_data.get("distance", {}).get("data", [])) else "",
                 stream_data.get("altitude", {}).get("data", [])[i] if i < len(stream_data.get("altitude", {}).get("data", [])) else "",
+            ]
+            writer.writerow(row)
 
+    print(f"CSV file generated at {filename}")
+    # Return the CSV file as a response for download
+    return FileResponse(filename, media_type="text/csv", filename="activity_stream.csv", background=None)
