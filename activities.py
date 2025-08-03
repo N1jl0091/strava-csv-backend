@@ -28,9 +28,10 @@ def list_activities(session_id: str):
 
     all_activities = strava_response.json()
     
-    # Filter: only most recent 10 bike rides
+    # Filter: only most recent 30 bike rides, include activity ID
     rides = [
         {
+            "id": a.get("id"),               # Added this line
             "name": a.get("name"),
             "distance": a.get("distance"),
             "start_date": a.get("start_date"),
