@@ -4,6 +4,9 @@ import uvicorn
 from auth import router as auth_router
 from activities import router as activities_router
 from config import STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET
+from streams import router as streams_router
+
+app.include_router(streams_router)
 
 app = FastAPI()
 

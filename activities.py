@@ -36,7 +36,7 @@ def list_activities(session_id: str):
             "start_date": a.get("start_date"),
         }
         for a in all_activities if a.get("type") == "Ride"
-    ][:10]
+    ][:30]
 
     print(f"Returning {len(rides)} bike rides")
     return JSONResponse(content=rides)
