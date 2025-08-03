@@ -36,7 +36,6 @@ def callback(request: Request, code: str):
     session_id = str(uuid.uuid4())
     SESSIONS[session_id] = token_data
 
-   return RedirectResponse(
-    f"https://N1jl0091.github.io/strava-csv-frontend/activities.html?session_id={session_id}"
+return RedirectResponse(
+        f"https://N1jl0091.github.io/strava-csv-frontend/activities.html?session_id={session_id}"
     )
-
