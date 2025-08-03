@@ -1,10 +1,20 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from auth import router as auth_router
 from activities import router as activities_router
 from config import STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET
 
 app = FastAPI()
+
+# Add CORS middleware to allow your frontend origin
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://n1jl0091.github.io"],  # your frontend origin here
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(auth_router)
 app.include_router(activities_router)
