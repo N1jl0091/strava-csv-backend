@@ -9,7 +9,8 @@ SESSIONS = {}
 
 STRAVA_CLIENT_ID = os.getenv("STRAVA_CLIENT_ID")
 STRAVA_CLIENT_SECRET = os.getenv("STRAVA_CLIENT_SECRET")
-REDIRECT_URI = "https://YOUR_BACKEND.onrailway.app/callback"
+REDIRECT_URI = "https://strava-csv-backend-production.up.railway.app/callback"
+
 
 @app.get("/auth")
 def auth():
@@ -35,4 +36,7 @@ def callback(request: Request, code: str):
     session_id = str(uuid.uuid4())
     SESSIONS[session_id] = token_data
 
-    return RedirectResponse(f"https://yourusername.github.io/strava-csv-frontend/activities.html?session_id={session_id}")
+   return RedirectResponse(
+    f"https://N1jl0091.github.io/strava-csv-frontend/activities.html?session_id={session_id}"
+    )
+
