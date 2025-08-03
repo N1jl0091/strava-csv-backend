@@ -12,7 +12,7 @@ def list_activities(session_id: str):
     token_data = SESSIONS.get(session_id)
     if not token_data:
         print("Invalid or expired session ID.")
-        return JSONResponse({"error": "Invalid session ID"}, status_code=401)
+        return JSONResponse(content={"error": "Invalid session ID"}, status_code=401)
 
     access_token = token_data["access_token"]
     
@@ -24,15 +24,19 @@ def list_activities(session_id: str):
 
     if strava_response.status_code != 200:
         print(f"Failed to fetch activities: {strava_response.text}")
-        return JSONResponse({"error": "Failed to fetch activities"}, status_code=500)
+        return JSONResponse(content={"error": "Failed to fetch activities"}, status_code=500)
 
     all_activities = strava_response.json()
     
     # Filter: only most recent 10 bike rides
     rides = [
-        a for a in all_activities
-        if a.get("type") == "Ride"
+        {
+            "name": a.get("name"),
+            "distance": a.get("distance"),
+            "start_date": a.get("start_date"),
+        }
+        for a in all_activities if a.get("type") == "Ride"
     ][:10]
 
     print(f"Returning {len(rides)} bike rides")
-    return rides
+    return JSONResponse(content=rides)
