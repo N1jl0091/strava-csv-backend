@@ -1,0 +1,3 @@
+zfastapi
+uvicorn
+requests
