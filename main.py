@@ -3,6 +3,7 @@ from fastapi.responses import RedirectResponse
 import os
 import requests
 import uuid
+import uvicorn
 
 app = FastAPI()
 SESSIONS = {}
@@ -56,3 +57,8 @@ def callback(request: Request, code: str):
     redirect_url = f"https://N1jl0091.github.io/strava-csv-frontend/activities.html?session_id={session_id}"
     print(f"Redirecting user to frontend URL: {redirect_url}")
     return RedirectResponse(redirect_url)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    print(f"Starting uvicorn on port {port}")
+    uvicorn.run(app, host="0.0.0.0", port=port)
