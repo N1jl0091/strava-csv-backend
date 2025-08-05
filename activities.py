@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from config import SESSIONS
 import requests
@@ -19,7 +19,8 @@ def list_activities(session_id: str):
     print("Requesting activities from Strava...")
     strava_response = requests.get(
         "https://www.strava.com/api/v3/athlete/activities",
-        headers={"Authorization": f"Bearer {access_token}"}
+        headers={"Authorization": f"Bearer {access_token}"},
+        params={"per_page": 100, "page": 1}  # Request up to 100 most recent activities
     )
 
     if strava_response.status_code != 200:
@@ -27,11 +28,11 @@ def list_activities(session_id: str):
         return JSONResponse(content={"error": "Failed to fetch activities"}, status_code=500)
 
     all_activities = strava_response.json()
-    
-    # Filter: only most recent 30 bike rides, include activity ID
+
+    # Get the 30 most recent Rides
     rides = [
         {
-            "id": a.get("id"),               # Added this line
+            "id": a.get("id"),
             "name": a.get("name"),
             "distance": a.get("distance"),
             "start_date": a.get("start_date"),
